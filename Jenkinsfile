@@ -17,4 +17,16 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            // The script is always run irrespective of the build status
+            echo 'Hey Build is executed'
+        }
+        success {
+            echo 'Hey Build is succesful'
+        }
+        failure {
+            echo 'Hey Build is failed'
+        }
+    }
 }
