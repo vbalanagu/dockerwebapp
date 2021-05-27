@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Deploying the applicaiton'
                 withCredentials ([
-                usernamePassword(credentials: 'github', usernameVariable: USER passwordVariable: PWD )
+                usernamePassword(credentials: 'github', usernameVariable: USER, passwordVariable: PWD )
             ]) {
                 sh "some script execution ${USER} and ${PWD}"
             }
