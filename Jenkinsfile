@@ -1,9 +1,14 @@
 pipeline {
     agent any
+    environment {
+        NEW_VERSION = '1.3.0'
+       // SERVER_CREDENTIALS = credentials('github')
+    }
     stages {
-        stage ("build") {
+        stage ("build") {         
             steps {
                 echo 'Building the applicaiton'
+                echo "Building version ${NEW_VERSION}"
             }
         }
         stage ("test") {
@@ -14,19 +19,12 @@ pipeline {
         stage ("Deploy") {
             steps {
                 echo 'Deploying the applicaiton'
+                withCredentials ([
+                usernamePassword(credentials: 'github', usernameVariable: USER passwordVariable: PWD )
+            ]) {
+                sh "some script execution ${USER} and ${PWD}"
             }
-        }
-    }
-    post {
-        always {
-            // The script is always run irrespective of the build status
-            echo 'Hey Build is executed'
-        }
-        success {
-            echo 'Hey Build is succesful'
-        }
-        failure {
-            echo 'Hey Build is failed'
+            }
         }
     }
 }
